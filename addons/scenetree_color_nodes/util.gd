@@ -1,10 +1,11 @@
 @tool
 
-const PROPERTY_NAME = "scene_tree_color"
+const METADATA_NAME := &"scene_tree_color"
+const PROPERTY_NAME := StringName("metadata/" + METADATA_NAME)
 
 
 static func node_has_color(node: Node):
-	var value = node.get_meta(PROPERTY_NAME, 0)
+	var value = node.get_meta(METADATA_NAME, 0)
 	return typeof(value) == TYPE_COLOR
 
 

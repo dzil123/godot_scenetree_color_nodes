@@ -3,6 +3,7 @@ extends EditorInspectorPlugin
 var editor_inspector: Node
 var editor_scale = 1.0
 var icon: Texture2D
+var undo_redo: EditorUndoRedoManager
 
 const Util = preload("util.gd")
 
@@ -29,7 +30,10 @@ func _parse_end(object):
 
 	var callback = func():
 		if not Util.node_has_color(node):
-			object.set_meta(Util.PROPERTY_NAME, Color(Color.WHITE, 0.25))
+			undo_redo.create_action("Set Custom Color")
+			undo_redo.add_do_method(node, &"set_meta", Util.METADATA_NAME, Color(Color.WHITE, 0.25))
+			undo_redo.add_undo_method(node, &"remove_meta", Util.METADATA_NAME)
+			undo_redo.commit_action()
 		btn.queue_free()
 
 	btn.text = "Set Custom Color"

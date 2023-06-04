@@ -18,6 +18,7 @@ func _enter_tree():
 	plugin.editor_scale = get_editor_interface().get_editor_scale()
 	plugin.icon = base_control.get_theme_icon("LabelSettings", "EditorIcons")
 	plugin.editor_inspector = get_editor_interface().get_inspector()
+	plugin.undo_redo = get_undo_redo()
 	add_inspector_plugin(plugin)
 
 
@@ -45,7 +46,7 @@ func process_item(item: TreeItem):
 		return
 
 	if Util.node_has_color(node):
-		var color = node.get_meta(Util.PROPERTY_NAME, Color.TRANSPARENT)
+		var color = node.get_meta(Util.METADATA_NAME, Color.TRANSPARENT)
 		item.set_custom_bg_color(0, color)
 	else:
 		item.clear_custom_bg_color(0)
